@@ -15,14 +15,36 @@ using System.Windows.Shapes;
 
 namespace Shop_Данилова.Elements
 {
-    /// <summary>
-    /// Логика взаимодействия для Item.xaml
-    /// </summary>
     public partial class Item : UserControl
     {
-        public Item()
+        public Item(object ItemData)
         {
             InitializeComponent();
+
+            // Преобразовываем полученный объект в базовый класс
+            Classes.Shop ShopData = ItemData as Classes.Shop;
+
+            // Указываем значения в поля
+            tb_Name.Content = ShopData.Name;
+            tb_Price.Content = "Цена: " + ShopData.Price;
+
+            // Проверяем можем ли преобразовать класс в детские товары
+            if (ItemData is Classes.Children)
+            {
+                // Преобразовываем в детские товары
+                Classes.Children ChildrenData = ItemData as Classes.Children;
+                // Выводим характеристику
+                tb_Characteristic.Content = "Возраст: " + ChildrenData.Age;
+            }
+
+            // Поверяем можем ли преобразовать класс в спорттовары
+            if (ItemData is Classes.Sport)
+            {
+                // Преобразовываем в спорттовары
+                Classes.Sport SportData = ItemData as Classes.Sport;
+                // Выводим характеристику
+                tb_Characteristic.Content = "Размер: " + SportData.Size;
+            }
         }
     }
 }
